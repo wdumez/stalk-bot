@@ -1,0 +1,6 @@
+source;share/package_opencv/hook/pythonpath.ps1
+source;share/package_opencv/hook/pythonpath.dsv
+source;share/package_opencv/hook/pythonpath.sh
+source;share/package_opencv/hook/ament_prefix_path.ps1
+source;share/package_opencv/hook/ament_prefix_path.dsv
+source;share/package_opencv/hook/ament_prefix_path.sh
