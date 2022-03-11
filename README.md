@@ -8,7 +8,7 @@ colcon build
 # bij grote projecten kan het handig zijn om de package enkel te laten builden als de rest niet veranderd is
 colcon build --packages-select <package_name>
 
-# elke terminal voor het runnen van ros commandos (bv: ros2 run ... ...) 
+# elke terminal voor het runnen van ros commandos (bv: ros2 run ... ...) moet je de workspace sources waar de packages zijn die je gebruikt
 . install/setup.bash
 
 # grafische voorstelling van nodes en topics
