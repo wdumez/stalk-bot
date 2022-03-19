@@ -58,6 +58,7 @@ This way, the `main` branch will always be older than any other branch and it wi
 4. Select the `wheels` branch.
 5. If the changes made in `wheels` do not conflict with the changes in `dev`, you're done.
 6. If there are conflicts, then these are called merge conflicts and you will have to manually solve them by going into each conflicted file and choosing which changes to accept ('current changes' would be `dev`, while 'incoming changes' would be `wheels`). If you would like a mix of both changes in a file, you will have to edit it manually to include both the changes.
+   Merge conflicts can be avoided by making good commits.
 
 Now any commits I had made to `wheels` will be included in `dev`, and not the other way around. 
 
