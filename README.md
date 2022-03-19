@@ -28,10 +28,18 @@
 
 ## Github workflow
 
-The `main` branch contains only large releases of our code. If this was a big software project like google chrome, the main branch be like the final release (v1.0, v1.1, ...).
+The `main` branch contains only large releases of our code. If this was a big software project the main branch would be like the final release (v1.0, v1.1, ...). **Never branch from `main`!**
 
-The `dev` branch contains smaller releases that eventually get bundled into a bigger release into main. This is like an internal release not yet ready to show to the public.
+The `dev` branch contains smaller releases that eventually get bundled into a bigger release into main. This is like an internal release that is not yet ready to show to the public.
 
 **All code committed to these two branches should work! (aside from unintentional bugs) so make sure to test your code before committing to them.**
 
-Let's say you wanted to work on a new feature 
+Let's say you wanted to work on a new feature about testing the wheels. Here's what you should do:
+1. Create a new branch **from `dev` or any other branch besides `main`**.
+2. Give this branch a short but descriptive name. For example: `wheels`, `william-wielen`, ...
+3. Make all your changes to this branch, and commit your code often but not constantly.
+4. When your feature is done, test all your code to make sure everything works and there are no obvious bugs.
+5. Merge your new branch **into `dev`**.
+6. (Optional) delete your branch.
+   
+This way, the `main` branch will always be older than any other branch and it will be easier to see which branches contain which commits. The only time main will get updated, is when `dev` is merged into it.
