@@ -1,0 +1,22 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from stalkbot_interface/msg/PersonOpenCv.msg
+// generated code does not contain a copyright notice
+
+
+module stalkbot_interface {
+  module msg {
+    struct PersonOpenCv {
+      int32 head_x;
+
+      int32 head_y;
+
+      int32 foot_x;
+
+      int32 foot_y;
+
+      boolean person_detected;
+
+      boolean face_detected;
+    };
+  };
+};

@@ -64,22 +64,27 @@ class MinimalSubscriber(Node):
         self.upper_body_detector = Cascade_filter(1)
         self.lower_body_detector = Cascade_filter(2)
 
+        capture = cv2.VideoCapture(0)
+        while True:
+            ret, frame = capture.read()
+            self.listener_callback(frame)
+
+
     def listener_callback(self, frame):
 
-        while True:
-            frame=cv2.resize(frame, (320, 240), interpolation = cv2.INTER_AREA)
-            gray=cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
+        frame=cv2.resize(frame, (320, 240), interpolation = cv2.INTER_AREA)
+        gray=cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
 
-            #Detect Persons
-            rects_full_body=self.full_body_detector.detect_full_body(gray)
-            #Detect Faces
-            rects_faces=self.face_detector.detect(gray)
-            #Upper body
-            rects_upper_body=self.upper_body_detector.detect(gray)
-            #Lower body
-            rects_lower_body=self.lower_body_detector.detect(gray)
-            
-            #Hier moet je message publishen
+        #Detect Persons
+        rects_full_body=self.full_body_detector.detect_full_body(gray)
+        #Detect Faces
+        rects_faces=self.face_detector.detect(gray)
+        #Upper body
+        rects_upper_body=self.upper_body_detector.detect(gray)
+        #Lower body
+        rects_lower_body=self.lower_body_detector.detect(gray)
+        
+        #Hier moet je message publishen
 
 
 def main(args=None):
