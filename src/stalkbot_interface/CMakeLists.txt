@@ -17,7 +17,7 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(stalkbot_hulp_interface REQUIRED)
+#find_package(stalkbot_interface)
 find_package(builtin_interfaces REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
@@ -27,12 +27,13 @@ if(BUILD_TESTING)
 endif()
 
 set(msg_files
+  "msg/BoundingBox.msg"
   "msg/PersonOpenCv.msg"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}
-  DEPENDENCIES stalkbot_hulp_interface
+  DEPENDENCIES
 )
 
 
