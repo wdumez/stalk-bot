@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(stalkbot_interface)
+project(stalkbot_hulp_interface)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -17,7 +17,6 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(stalkbot_hulp_interface REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
@@ -27,12 +26,12 @@ if(BUILD_TESTING)
 endif()
 
 set(msg_files
-  "msg/PersonOpenCv.msg"
+  "msg/BoundingBox.msg"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}
-  DEPENDENCIES stalkbot_hulp_interface
+  DEPENDENCIES builtin_interfaces
 )
 
 
