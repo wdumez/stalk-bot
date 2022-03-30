@@ -2,7 +2,7 @@
 import cv2
 from cascade_filter import Cascade_filter
 from full_body_detector import Full_body_detector
-
+from MainController import MainController
 
 
 
@@ -29,9 +29,42 @@ def main():
         rects_lower_body=lower_body_detector.detect(gray)
         
         #Hier moet je message publishen
-    
+       
+       #Actie
+        action = MainController(gray.shape[1], rects_faces, rects_full_body, rects_upper_body, rects_lower_body)
 
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        org = (30, 30)
+        fontScale = 0.8
+        color = (0, 0, 0)
+        thickness = 1
 
+        print(rects_faces, rects_full_body, rects_upper_body, rects_lower_body) 
+        try:
+            frame = cv2.rectangle(frame, (rects_faces[0][0], rects_faces[0][1]), (rects_faces[0][0] + rects_faces[0][2], rects_faces[0][1] + rects_faces[0][3]), (255, 0, 0), 2) 
+        except:
+            print("Leeg")
+        try:
+            frame = cv2.rectangle(frame, (rects_full_body[0][0], rects_full_body[0][1]), (rects_full_body[0][0] + rects_full_body[0][2], rects_full_body[0][1] + rects_full_body[0][3]), (0, 255, 0), 2) 
+        except:
+            print("Leeg")
+        try:
+            frame = cv2.rectangle(frame, (rects_upper_body[0][0], rects_upper_body[0][1]), (rects_upper_body[0][0] + rects_upper_body[0][2], rects_upper_body[0][1] + rects_upper_body[0][3]), (0, 0, 255), 2) 
+        except:
+            print("Leeg")
+        try:
+            frame = cv2.rectangle(frame, (rects_lower_body[0][0], rects_lower_body[0][1]), (rects_lower_body[0][0] + rects_lower_body[0][2], rects_lower_body[0][1] + rects_lower_body[0][3]), (255, 255, 0), 2) 
+        except:
+            print("Leeg")
+        frame = cv2.putText(frame, action, org, font, 
+                   fontScale, color, thickness, cv2.LINE_AA)
+
+        cv2.imshow("Detection with Action", frame) 
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    capture.release()
+    cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
