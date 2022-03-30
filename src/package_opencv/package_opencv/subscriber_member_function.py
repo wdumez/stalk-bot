@@ -55,19 +55,18 @@ class MinimalSubscriber(Node):
         super().__init__('minimal_subscriber')
         self.subscription = self.create_subscription(
             String,
-            'topic',
+            'camera_topic',
             self.listener_callback,
             10)
+        self.publisher_ = self.create_publisher(String, 'rects_topic', 10)
+
         self.subscription  # prevent unused variable warning
-        self.full_body_detector=Full_body_detector()
+        self.full_body_detector=Full_body_detector() #making detectors
         self.face_detector=Cascade_filter(0)
         self.upper_body_detector = Cascade_filter(1)
         self.lower_body_detector = Cascade_filter(2)
 
-        capture = cv2.VideoCapture(0)
-        while True:
-            ret, frame = capture.read()
-            self.listener_callback(frame)
+        self.listener_callback()
 
 
     def listener_callback(self, frame):
