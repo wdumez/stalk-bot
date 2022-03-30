@@ -53,23 +53,27 @@ class MinimalSubscriber(Node):
 
     def __init__(self):
         super().__init__('minimal_subscriber')
-        self.subscription = self.create_subscription(
+        """self.subscription = self.create_subscription(
             String,
             'camera_topic',
             self.listener_callback,
-            10)
+            10)"""
         self.publisher_ = self.create_publisher(String, 'rects_topic', 10)
 
-        self.subscription  # prevent unused variable warning
+        #self.subscription  # prevent unused variable warning
         self.full_body_detector=Full_body_detector() #making detectors
         self.face_detector=Cascade_filter(0)
         self.upper_body_detector = Cascade_filter(1)
         self.lower_body_detector = Cascade_filter(2)
 
-        self.listener_callback()
+        cap = cv2.VideoCapture(0)
+        while(True):
+            ret, frame = cap.read()
+            #cv2.imshow('frame', frame)
+            self.verwerkFoto(frame)
 
 
-    def listener_callback(self, frame):
+    def verwerkFoto(self, frame):
 
         frame=cv2.resize(frame, (320, 240), interpolation = cv2.INTER_AREA)
         gray=cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
