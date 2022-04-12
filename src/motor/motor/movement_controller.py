@@ -69,7 +69,7 @@ class MovementController(Node):
         if self.move_forward:
             self.vel_msg.linear.x = 0.2
         else:
-            self.vel_msg.linear.x = 0.0
+            self.vel_msg.linear.x = -0.1
         if self.rotate_left:
             self.vel_msg.angular.z = 0.2
         elif self.rotate_left:
