@@ -2,6 +2,7 @@
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
+# from stalkbot_interface.msg import Person
 
 
 class MovementController(Node):
@@ -13,11 +14,6 @@ class MovementController(Node):
         super().__init__('minimal_publisher')
         self.vel_msg = Twist()
         # Parameters that do not change
-        self.vel_msg.linear.y = 0.0
-        self.vel_msg.linear.z = 0.0
-        self.vel_msg.angular.x = 0.0
-        self.vel_msg.angular.y = 0.0
-        self.vel_msg.angular.z = 0.0
 
         # Current state
         self.move_forward = False
@@ -71,8 +67,15 @@ class MovementController(Node):
         # positive x is forward
         if self.move_forward:
             self.vel_msg.linear.x = 10.0
+            self.vel_msg.linear.y = 10.0
+            self.vel_msg.linear.z = 10.0
         else:
             self.vel_msg.linear.x = 0.0
+            self.vel_msg.linear.y = 0.0
+            self.vel_msg.linear.z = 0.0
+        self.vel_msg.angular.x = 0.0
+        self.vel_msg.angular.y = 0.0
+        self.vel_msg.angular.z = 0.0
         self.move_publisher.publish(self.vel_msg)
         self.get_logger().info('Sent move commands: %s' % str(self.vel_msg))
 
