@@ -12,6 +12,12 @@ class MovementController(Node):
     def __init__(self):
         super().__init__('minimal_publisher')
         self.vel_msg = Twist()
+        # Parameters that do not change
+        self.vel_msg.linear.y = 0.0
+        self.vel_msg.linear.z = 0.0
+        self.vel_msg.angular.x = 0.0
+        self.vel_msg.angular.y = 0.0
+        self.vel_msg.angular.z = 0.0
 
         # Current state
         self.move_forward = False
@@ -31,7 +37,7 @@ class MovementController(Node):
         # self.subscription = self.create_subscription(
         #     MoveCommands, # msg type
         #     'topic_name', # topic name
-        #     self.listener_callback, # callback
+        #     self.send_move_commands, # callback
         #     10) # queue size?
         # self.subscription  # prevent unused variable warning
 
@@ -67,16 +73,6 @@ class MovementController(Node):
             self.vel_msg.linear.x = 10.0
         else:
             self.vel_msg.linear.x = 0.0
-        # positive y is left
-        # positive z is up
-        # We do not need to use these.
-        self.vel_msg.linear.y = 0.0
-        self.vel_msg.linear.z = 0.0
-
-        # ? positive x is ?
-        self.vel_msg.angular.x = 0.0
-        self.vel_msg.angular.y = 0.0
-        self.vel_msg.angular.z = 0.0
         self.move_publisher.publish(self.vel_msg)
         self.get_logger().info('Sent move commands: %s' % str(self.vel_msg))
 
