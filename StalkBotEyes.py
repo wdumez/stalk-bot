@@ -9,13 +9,16 @@ from MainController import MainController
 def main():
     capture = cv2.VideoCapture(0)
 
+    #initialize the detectors
     full_body_detector=Full_body_detector()
     face_detector=Cascade_filter(0)
     upper_body_detector = Cascade_filter(1)
     lower_body_detector = Cascade_filter(2)
 
     while True:
+        #this would be a frame that would be received from camera node
         ret, frame = capture.read()
+        #do the needed pre-proccesing
         frame=cv2.resize(frame, (320, 240), interpolation = cv2.INTER_AREA)
         gray=cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
 
@@ -28,9 +31,10 @@ def main():
         #Lower body
         rects_lower_body=lower_body_detector.detect(gray)
         
-        #Hier moet je message publishen
+        #Publish all the rects above here
        
-       #Actie
+
+       #Actie voor test, mag verwijdert worden in node
         action = MainController(gray.shape[1], rects_faces, rects_full_body, rects_upper_body, rects_lower_body)
 
         font = cv2.FONT_HERSHEY_SIMPLEX
