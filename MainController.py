@@ -3,6 +3,8 @@ from tkinter import W
 
 from matplotlib.style import available
 
+
+
 def unpack(rects):
     middle = 0
     rects_not_empty = 0
@@ -38,8 +40,12 @@ def MainController(image_width, rects_faces, rects_full_body, rects_upper_body, 
     except:
         print("alles leeg")
 
+    #if one faces is detected send message "Stoppen"
+    if(len(rects_faces) != 0):
+        return "Stoppen"
+
     #when there is atleast one body and no faces detected
-    if((rects_full_body_not_empty or rects_upper_body_not_empty or rects_lower_body_not_empty) and len(rects_faces) == 0):
+    if((rects_full_body_not_empty or rects_upper_body_not_empty or rects_lower_body_not_empty)):
         #person is on the right of the screen
         if(average_middle > window[1]):
             return "Links wiel draaien"
@@ -47,13 +53,12 @@ def MainController(image_width, rects_faces, rects_full_body, rects_upper_body, 
         if(average_middle < window[0]):
             return "Rechts wiel draaien"
         #if none of these are fullfilled --> person is in the window you can drive forward
-        return "Vooruit" 
+        return "Vooruit"
+        
     #nothing detected at all --> search a person
-    if(not(rects_full_body_not_empty or rects_full_body_not_empty or rects_full_body_not_empty) and len(rects_faces) == 0):    
-        return "Links of Rechts draaien (zoeken)"
+    return "Links of Rechts draaien (zoeken)"
 
-    #this means a faces was detected --> stoppen      
-    return "Stoppen"    
+       
 
 
 

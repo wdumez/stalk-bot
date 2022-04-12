@@ -35,7 +35,7 @@ def main():
         #tot hier eyes node
        
         #vanaf hier test
-       #Actie voor test, mag verwijdert worden in node
+        #Actie voor test, mag verwijdert worden in node
         action = MainController(gray.shape[1], rects_faces, rects_full_body, rects_upper_body, rects_lower_body)
 
         font = cv2.FONT_HERSHEY_SIMPLEX
