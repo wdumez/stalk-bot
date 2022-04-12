@@ -13,9 +13,14 @@
 # limitations under the License.
 
 from ast import Try
+
+from numpy import rec
 import rclpy
 from rclpy.node import Node
 import cv2
+from stalkbot_interface.msg import BoundingBox
+from stalkbot_interface.msg import PersonOpenCv
+
 
 from std_msgs.msg import String
 
@@ -59,7 +64,8 @@ class MinimalSubscriber(Node):
             'camera_topic',
             self.listener_callback,
             10)"""
-        self.publisher_ = self.create_publisher(String, 'rects_topic', 10)
+
+        self.publisher_ = self.create_publisher(PersonOpenCv, 'Persons', 10)
 
         #self.subscription  # prevent unused variable warning
         self.full_body_detector=Full_body_detector() #making detectors
@@ -90,8 +96,18 @@ class MinimalSubscriber(Node):
 
         #print output
         self.get_logger().info('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        self.msg = PersonOpenCv()
+        self.msg.person_detected = True
+        self.msg.face_detected = True
+        rects = BoundingBox()
         try:
             self.get_logger().info('Faces: "%s"' % rects_faces)
+            rects.x = int(rects_faces[0][0])
+            rects.y = int(rects_faces[0][1])
+            rects.xx = int(rects_faces[0][2])
+            rects.yy = int(rects_faces[0][3])
+
+            self.msg.persons.append(rects)
         except:
             self.get_logger().info('No Face')
         try:
@@ -107,6 +123,7 @@ class MinimalSubscriber(Node):
         except:
             self.get_logger().info('No lower body')
 
+        self.publisher_.publish(self.msg)
         #Hier moet je message publishen
         
 
