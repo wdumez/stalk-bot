@@ -66,16 +66,19 @@ class MovementController(Node):
         # ! otherwise you will get an error.
         # positive x is forward
         if self.move_forward:
-            self.vel_msg.linear.x = 10.0
-            self.vel_msg.linear.y = 10.0
-            self.vel_msg.linear.z = 10.0
+            self.vel_msg.linear.x = 1000.0
+            self.vel_msg.linear.y = 1000.0
+            self.vel_msg.linear.z = 1000.0
+            self.vel_msg.angular.x = 1000.0
+            self.vel_msg.angular.y = 1000.0
+            self.vel_msg.angular.z = 1000.0
         else:
             self.vel_msg.linear.x = 0.0
             self.vel_msg.linear.y = 0.0
             self.vel_msg.linear.z = 0.0
-        self.vel_msg.angular.x = 0.0
-        self.vel_msg.angular.y = 0.0
-        self.vel_msg.angular.z = 0.0
+            self.vel_msg.angular.x = 0.0
+            self.vel_msg.angular.y = 0.0
+            self.vel_msg.angular.z = 0.0
         self.move_publisher.publish(self.vel_msg)
         self.get_logger().info('Sent move commands: %s' % str(self.vel_msg))
 
