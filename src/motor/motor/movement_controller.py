@@ -38,7 +38,7 @@ class MovementController(Node):
         # self.subscription  # prevent unused variable warning
 
         # TODO currently faking some commands
-        get_commands_period = 1.5  # seconds
+        get_commands_period = 10  # seconds
         self.get_commands_timer = self.create_timer(
             get_commands_period, self.get_commands)
 
