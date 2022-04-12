@@ -20,7 +20,7 @@ class MovementController(Node):
         self.rotate_right = False
         self.rotate_left = False
 
-        self.move_publisher = self.create_publisher(Twist, 'cmd_vel', 10)
+        self.move_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
 
         # Move timer sends the Twist message to move the robot
         self.move_timer = self.create_timer(
