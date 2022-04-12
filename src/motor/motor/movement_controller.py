@@ -54,7 +54,7 @@ class MovementController(Node):
         else:
             self.rotate_left = True
             self.rotate_right = False
-        self.get_logger().info("Updated state with new commands.")
+        self.get_logger().info("Updated state with new commands\n.")
 
     def send_move_commands(self):
         """
@@ -66,12 +66,12 @@ class MovementController(Node):
         # ! otherwise you will get an error.
         # positive x is forward
         if self.move_forward:
-            self.vel_msg.linear.x = 0.5
-            self.vel_msg.linear.y = 0.5
-            self.vel_msg.linear.z = 0.5
-            self.vel_msg.angular.x = 0.5
-            self.vel_msg.angular.y = 0.5
-            self.vel_msg.angular.z = 0.5
+            self.vel_msg.linear.x = 0.1
+            self.vel_msg.linear.y = 0.1
+            self.vel_msg.linear.z = 0.1
+            self.vel_msg.angular.x = 0.1
+            self.vel_msg.angular.y = 0.1
+            self.vel_msg.angular.z = 0.1
         else:
             self.vel_msg.linear.x = 0.0
             self.vel_msg.linear.y = 0.0
@@ -80,7 +80,7 @@ class MovementController(Node):
             self.vel_msg.angular.y = 0.0
             self.vel_msg.angular.z = 0.0
         self.move_publisher.publish(self.vel_msg)
-        self.get_logger().info('Sent move commands: %s' % str(self.vel_msg))
+        self.get_logger().info('Sent move commands: \n%s\n' % str(self.vel_msg))
 
 
 def main(args=None):
