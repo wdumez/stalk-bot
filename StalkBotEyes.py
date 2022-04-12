@@ -32,8 +32,9 @@ def main():
         rects_lower_body=lower_body_detector.detect(gray)
         
         #Publish all the rects above here
+        #tot hier eyes node
        
-
+        #vanaf hier test
        #Actie voor test, mag verwijdert worden in node
         action = MainController(gray.shape[1], rects_faces, rects_full_body, rects_upper_body, rects_lower_body)
 
