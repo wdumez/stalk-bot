@@ -9,6 +9,7 @@ class MovementController(Node):
     """Makes the turtlebot move according to incoming commands."""
 
     MOVEMENT_UPDATE_TIME = 1  # seconds
+    MOVE_SPEED = 0.2
 
     def __init__(self):
         super().__init__('minimal_publisher')
@@ -38,7 +39,7 @@ class MovementController(Node):
         # self.subscription  # prevent unused variable warning
 
         # TODO currently faking some commands
-        get_commands_period = 10  # seconds
+        get_commands_period = 5  # seconds
         self.get_commands_timer = self.create_timer(
             get_commands_period, self.get_commands)
 
@@ -66,18 +67,14 @@ class MovementController(Node):
         # ! otherwise you will get an error.
         # positive x is forward
         if self.move_forward:
-            self.vel_msg.linear.x = 0.1
-            self.vel_msg.linear.y = 0.1
-            self.vel_msg.linear.z = 0.1
-            self.vel_msg.angular.x = 0.1
-            self.vel_msg.angular.y = 0.1
-            self.vel_msg.angular.z = 0.1
+            self.vel_msg.linear.x = 0.2
         else:
             self.vel_msg.linear.x = 0.0
-            self.vel_msg.linear.y = 0.0
-            self.vel_msg.linear.z = 0.0
-            self.vel_msg.angular.x = 0.0
-            self.vel_msg.angular.y = 0.0
+        if self.rotate_left:
+            self.vel_msg.angular.z = 0.2
+        elif self.rotate_left:
+            self.vel_msg.angular.z = -0.2
+        else:
             self.vel_msg.angular.z = 0.0
         self.move_publisher.publish(self.vel_msg)
         self.get_logger().info('Sent move commands: \n%s\n' % str(self.vel_msg))
