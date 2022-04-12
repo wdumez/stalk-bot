@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from ast import Try
 import rclpy
 from rclpy.node import Node
 import cv2
@@ -86,8 +87,28 @@ class MinimalSubscriber(Node):
         rects_upper_body=self.upper_body_detector.detect(gray)
         #Lower body
         rects_lower_body=self.lower_body_detector.detect(gray)
-        
+
+        #print output
+        self.get_logger().info('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        try:
+            self.get_logger().info('Faces: "%s"' % rects_faces)
+        except:
+            self.get_logger().info('No Face')
+        try:
+            self.get_logger().info('Body: "%s"' % rects_full_body)
+        except:
+            self.get_logger().info('No full body')
+        try:
+            self.get_logger().info('Upper: "%s"' % rects_upper_body)
+        except:
+            self.get_logger().info('No upper body')
+        try:
+            self.get_logger().info('Lower: "%s"' % rects_lower_body)
+        except:
+            self.get_logger().info('No lower body')
+
         #Hier moet je message publishen
+        
 
 
 def main(args=None):
