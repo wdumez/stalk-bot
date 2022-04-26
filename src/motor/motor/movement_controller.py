@@ -4,23 +4,28 @@ from re import I
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
+<<<<<<< HEAD
 from stalkbot_interface.msg import PersonOpenCv,BoundingBox
+=======
+from stalkbot_interface.msg import MoveCommand
+>>>>>>> origin/wheels
 
 
 class MovementController(Node):
     """Makes the turtlebot move according to incoming commands."""
 
-    MOVEMENT_UPDATE_TIME = 1  # seconds
+    MOVEMENT_UPDATE_TIME = 0.01  # seconds
+    MOVE_SPEED = 0.2
+    ROTATE_SPEED = 0.1
 
     def __init__(self):
         super().__init__('minimal_publisher')
         self.vel_msg = Twist()
         # Parameters that do not change
-
-        # Current state
-        self.move_forward = False
-        self.rotate_right = False
-        self.rotate_left = False
+        self.vel_msg.linear.y = 0.0
+        self.vel_msg.linear.z = 0.0
+        self.vel_msg.angular.x = 0.0
+        self.vel_msg.angular.y = 0.0
 
         self.move_publisher = self.create_publisher(Twist, 'cmd_vel', 10)
 
@@ -31,6 +36,7 @@ class MovementController(Node):
         )
 
         # Subscribe to the incoming commands
+<<<<<<< HEAD
         # TODO no custom message yet
         self.subscription = self.create_subscription(
             PersonOpenCv, # msg type
@@ -63,27 +69,35 @@ class MovementController(Node):
         self.get_logger().info("Updated state with new commands.")
 
     def send_move_commands(self):
+=======
+        self.subscription = self.create_subscription(
+            MoveCommand,  # msg type
+            'move_command',  # topic name
+            self.send_move_commands,  # callback
+            10)  # queue size?
+        self.subscription  # prevent unused variable warning
+
+    def send_move_commands(self, msg):
+>>>>>>> origin/wheels
         """
         Update and publish self.vel_msg with the right
         parameters according to the current state.
         """
-        # TODO linear and angular velocity calculation based on current state
         # ! You must specify these values as float,
         # ! otherwise you will get an error.
-        # positive x is forward
-        if self.move_forward:
-            self.vel_msg.linear.x = 10.0
-            self.vel_msg.linear.y = 10.0
-            self.vel_msg.linear.z = 10.0
+        # positive linear x is move forward
+        # positive angular z is rotate right
+        if msg.move_forward:
+            self.vel_msg.linear.x = MovementController.MOVE_SPEED
         else:
             self.vel_msg.linear.x = 0.0
-            self.vel_msg.linear.y = 0.0
-            self.vel_msg.linear.z = 0.0
-        self.vel_msg.angular.x = 0.0
-        self.vel_msg.angular.y = 0.0
-        self.vel_msg.angular.z = 0.0
+        if msg.rotate_left:
+            self.vel_msg.angular.z = MovementController.ROTATE_SPEED
+        elif msg.rotate_right:
+            self.vel_msg.angular.z = -MovementController.ROTATE_SPEED
+        else:
+            self.vel_msg.angular.z = 0.0
         self.move_publisher.publish(self.vel_msg)
-        self.get_logger().info('Sent move commands: %s' % str(self.vel_msg))
 
 
 def main(args=None):
