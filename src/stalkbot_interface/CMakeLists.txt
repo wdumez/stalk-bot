@@ -29,6 +29,7 @@ endif()
 set(msg_files
   "msg/BoundingBox.msg"
   "msg/PersonOpenCv.msg"
+  "msg/MoveCommand.msg"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
