@@ -1,5 +1,11 @@
 # stalk-bot 
 
+## Planning
+
+We use [this online tool](https://www.onlinegantt.com/#/gantt) to make the planning.
+
+![Our planning](./planning/Online%20Gantt%2020220323.png)
+
 ## kasper NOTES
 
 ### builden van workspace: IMPORTANT: enkel in root van je ros workspace (bij ons {....}/STALK-BOT)
