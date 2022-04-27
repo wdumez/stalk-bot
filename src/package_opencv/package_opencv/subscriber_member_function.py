@@ -51,6 +51,9 @@ class Full_body_detector():
         return rects
 
 class MinimalSubscriber(Node):
+    
+    FPS = 30
+    PUBLISH_TIME = 1 / FPS
 
     def __init__(self):
         super().__init__('minimal_subscriber')
@@ -66,12 +69,17 @@ class MinimalSubscriber(Node):
         self.face_detector=Cascade_filter(0)
         self.upper_body_detector = Cascade_filter(1)
         self.lower_body_detector = Cascade_filter(2)
-
+        
+        self.publish_timer = self.create_timer(
+            MinimalSubscriber.PUBLISH_TIME,
+            self.publish_msg
+        )
+        
+    def publish_msg(self):
         cap = cv2.VideoCapture(0)
-        while(True):
-            ret, frame = cap.read()
-            #cv2.imshow('frame', frame)
-            self.verwerkFoto(frame)
+        ret, frame = cap.read()
+        #cv2.imshow('frame', frame)
+        self.verwerkFoto(frame)
 
 
     def verwerkFoto(self, frame):
