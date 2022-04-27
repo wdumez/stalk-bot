@@ -56,6 +56,9 @@ class Full_body_detector():
         return rects
 
 class MinimalSubscriber(Node):
+    
+    FPS = 30
+    PUBLISH_TIME = 1 / FPS
 
     def __init__(self):
         super().__init__('minimal_subscriber')
