@@ -2,7 +2,7 @@
 import cv2
 from cascade_filter import Cascade_filter
 from full_body_detector import Full_body_detector
-from MainController import MainController
+from src.main_controller.main_controller.main_controller import MainController
 
 
 
