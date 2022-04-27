@@ -100,6 +100,8 @@ class MinimalSubscriber(Node):
             rects.xx = int(rects_faces[0][2])
             rects.yy = int(rects_faces[0][3])
             self.msg.persons.append(rects)
+
+            frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (250, 0, 0), 2)
         except:
             self.get_logger().info('No Face')
         try:
@@ -110,6 +112,9 @@ class MinimalSubscriber(Node):
             rects.xx = int(rects_full_body[0][2])
             rects.yy = int(rects_full_body[0][3])
             self.msg.persons.append(rects)
+
+            frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (0, 0, 255), 2)
+
         except:
             self.get_logger().info('No full body')
         try:
@@ -120,6 +125,9 @@ class MinimalSubscriber(Node):
             rects.xx = int(rects_upper_body[0][2])
             rects.yy = int(rects_upper_body[0][3])
             self.msg.persons.append(rects)
+
+            frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (0, 255, 0), 2)
+
         except:
             self.get_logger().info('No upper body')
         try:
@@ -130,6 +138,9 @@ class MinimalSubscriber(Node):
             rects.xx = int(rects_lower_body[0][2])
             rects.yy = int(rects_lower_body[0][3])
             self.msg.persons.append(rects)
+
+            frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (250, 255, 0), 2)
+
         except:
             self.get_logger().info('No lower body')
 
