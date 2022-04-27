@@ -13,7 +13,7 @@ class MovementController(Node):
     ROTATE_SPEED = 0.1
 
     def __init__(self):
-        super().__init__('minimal_publisher')
+        super().__init__('movement_controller')
         self.vel_msg = Twist()
         # Parameters that do not change
         self.vel_msg.linear.y = 0.0
