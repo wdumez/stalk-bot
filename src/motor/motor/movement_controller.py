@@ -26,18 +26,18 @@ class MovementController(Node):
         # Move timer sends the Twist message to move the robot
         self.move_timer = self.create_timer(
             MovementController.MOVEMENT_UPDATE_TIME,
-            self.send_move_commands  # callback
+            self.pubish_msg  # callback
         )
 
         # Subscribe to the incoming commands
         self.subscription = self.create_subscription(
             MoveCommand,  # msg type
             'move_command',  # topic name
-            self.send_move_commands,  # callback
+            self.update_move_commands,  # callback
             10)  # queue size?
         self.subscription  # prevent unused variable warning
 
-    def send_move_commands(self, msg):
+    def update_move_commands(self, msg):
         """
         Update and publish self.vel_msg with the right
         parameters according to the current state.
@@ -56,6 +56,9 @@ class MovementController(Node):
             self.vel_msg.angular.z = -MovementController.ROTATE_SPEED
         else:
             self.vel_msg.angular.z = 0.0
+
+    def pubish_msg(self):
+        """Publish the Twist message to make the robot move."""
         self.move_publisher.publish(self.vel_msg)
 
 
