@@ -4,11 +4,8 @@ from re import I
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
-<<<<<<< HEAD
 from stalkbot_interface.msg import PersonOpenCv,BoundingBox
-=======
 from stalkbot_interface.msg import MoveCommand
->>>>>>> origin/wheels
 
 
 class MovementController(Node):
@@ -36,7 +33,6 @@ class MovementController(Node):
         )
 
         # Subscribe to the incoming commands
-<<<<<<< HEAD
         # TODO no custom message yet
         self.subscription = self.create_subscription(
             PersonOpenCv, # msg type
@@ -69,16 +65,6 @@ class MovementController(Node):
         self.get_logger().info("Updated state with new commands.")
 
     def send_move_commands(self):
-=======
-        self.subscription = self.create_subscription(
-            MoveCommand,  # msg type
-            'move_command',  # topic name
-            self.send_move_commands,  # callback
-            10)  # queue size?
-        self.subscription  # prevent unused variable warning
-
-    def send_move_commands(self, msg):
->>>>>>> origin/wheels
         """
         Update and publish self.vel_msg with the right
         parameters according to the current state.

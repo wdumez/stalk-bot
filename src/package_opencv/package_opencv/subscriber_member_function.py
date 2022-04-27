@@ -15,6 +15,8 @@
 from ast import Try
 import rclpy
 from rclpy.node import Node
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
 import cv2
 
 from std_msgs.msg import String
@@ -34,8 +36,8 @@ class Cascade_filter():
             print("Value has to be between 0 and 2")
 
     def detect(self, gray_frame):
-        detected_upper = self.detector.detectMultiScale3(gray_frame, outputRejectLevels=True)
-        rects, weights, score = detected_upper
+        #detected_upper = self.detector.detectMultiScale3(gray_frame, outputRejectLevels=True)
+        rects, weights, score = 0,0,0 #detected_upper
 
         return rects
 
@@ -60,14 +62,17 @@ class MinimalSubscriber(Node):
             self.listener_callback,
             10)"""
         self.publisher_ = self.create_publisher(String, 'rects_topic', 10)
+        #processed image publisher
+        self.publisher_ = self.create_publisher(Image, 'video_frames', 10)
+        self.br = CvBridge()
 
         #self.subscription  # prevent unused variable warning
         self.full_body_detector=Full_body_detector() #making detectors
         self.face_detector=Cascade_filter(0)
         self.upper_body_detector = Cascade_filter(1)
         self.lower_body_detector = Cascade_filter(2)
-
-        cap = cv2.VideoCapture(0)
+        
+        cap = cv2.VideoCapture(2)
         while(True):
             ret, frame = cap.read()
             #cv2.imshow('frame', frame)
@@ -107,6 +112,7 @@ class MinimalSubscriber(Node):
         except:
             self.get_logger().info('No lower body')
 
+        self.publisher_.publish(self.br.cv2_to_imgmsg(gray))
         #Hier moet je message publishen
         
 
