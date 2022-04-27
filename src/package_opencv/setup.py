@@ -20,8 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'talker = package_opencv.publisher_member_function:main',
-            'listener = package_opencv.subscriber_member_function:main',
+            'talker = package_opencv.CameraNode:main',
         ],
     },
 )
