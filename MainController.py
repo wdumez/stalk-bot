@@ -21,8 +21,8 @@ class MainController(Node):
         # Subscribe to the incoming commands
         self.subscription = self.create_subscription(
             PersonOpenCv,  # msg type
-            'main_command',  # topic name !!!!!!!!!!
-            self.send_main_commands,  # callback
+            'Persons',  # topic name
+            self.send_main_command,  # callback
             10)  # queue size?
         self.subscription  # prevent unused variable warning
 
@@ -40,18 +40,20 @@ class MainController(Node):
             
         return middle, rects_not_empty
 
-
+    #Defines how large the window has to be
+    WINDOW_WIDTH = 20
 
     def send_main_command(self, msg): 
         
-        middle_screen = image_width/2
-        window = (middle_screen - 20, middle_screen + 21)
+        middle_screen = msg.w/2
+        window = (middle_screen - MainController.WINDOW_WIDTH, middle_screen + MainController.WINDOW_WIDTH)
 
         #unpack the rects received: rects_full_body_not_empty=1 of not empty
-        middle_full_body, rects_full_body_not_empty = unpack(rects_full_body)
-        middle_upper_body, rects_upper_body_not_empty = unpack(rects_upper_body)
-        middle_lower_body, rects_lower_body_not_empty = unpack(rects_lower_body)
+        middle_full_body, rects_full_body_not_empty = self.unpack(msg.persons[1])
+        middle_upper_body, rects_upper_body_not_empty = self.unpack(msg.persons[2])
+        middle_lower_body, rects_lower_body_not_empty = self.unpack(msg.persons[3])
 
+        rects_faces = msg.persons[0]
         #voor debuggen
         #rects_faces = []
         
