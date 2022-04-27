@@ -56,35 +56,22 @@ class Full_body_detector():
         return rects
 
 class MinimalSubscriber(Node):
-    
-    FPS = 30
-    PUBLISH_TIME = 1 / FPS
 
     def __init__(self):
         super().__init__('minimal_subscriber')
-        """self.subscription = self.create_subscription(
-            String,
-            'camera_topic',
-            self.listener_callback,
-            10)"""
 
         self.publisher_ = self.create_publisher(PersonOpenCv, 'Persons', 10)
 
-        #self.subscription  # prevent unused variable warning
-        self.full_body_detector=Full_body_detector() #making detectors
+        #making detectors
+        self.full_body_detector=Full_body_detector()
         self.face_detector=Cascade_filter(0)
         self.upper_body_detector = Cascade_filter(1)
         self.lower_body_detector = Cascade_filter(2)
 
         self.cap = cv2.VideoCapture(0)
-        timer_period = 0.1  # seconds
-        self.timer = self.create_timer(timer_period, self.verwerkFoto)
-        """
-        cap = cv2.VideoCapture(0)
-        while(True):
-            ret, frame = cap.read()
-            self.verwerkFoto(frame)
-        """
+        FPS = 10
+        PUBLISH_TIME = 1 / FPS
+        self.timer = self.create_timer(PUBLISH_TIME, self.verwerkFoto)
 
     def verwerkFoto(self):
         ret, frame = self.cap.read()
@@ -100,7 +87,7 @@ class MinimalSubscriber(Node):
         #Lower body
         rects_lower_body=self.lower_body_detector.detect(gray)
 
-        #print output
+        #prepare output
         self.get_logger().info('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         self.msg = PersonOpenCv()
         self.msg.w = frame.shape[0]
@@ -146,9 +133,8 @@ class MinimalSubscriber(Node):
         except:
             self.get_logger().info('No lower body')
 
-        self.publisher_.publish(self.msg)
-        #Hier moet je message publishen
-        
+        #send output
+        self.publisher_.publish(self.msg)        
 
 
 def main(args=None):
