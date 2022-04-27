@@ -16,7 +16,7 @@ class MovementController(Node):
     ROTATE_SPEED = 0.1
 
     def __init__(self):
-        super().__init__('minimal_publisher')
+        super().__init__('movement_controller')
         self.vel_msg = Twist()
         # Parameters that do not change
         self.vel_msg.linear.y = 0.0
@@ -65,6 +65,14 @@ class MovementController(Node):
         self.get_logger().info("Updated state with new commands.")
 
     def send_move_commands(self):
+        self.subscription = self.create_subscription(
+            MoveCommand,  # msg type
+            'move_command',  # topic name
+            self.send_move_commands,  # callback
+            10)  # queue size?
+        self.subscription  # prevent unused variable warning
+
+    def send_move_commands(self, msg):
         """
         Update and publish self.vel_msg with the right
         parameters according to the current state.
