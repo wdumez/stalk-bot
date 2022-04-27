@@ -6,6 +6,10 @@ import launch_ros.actions
 def generate_launch_description():
     return launch.LaunchDescription([
         launch.actions.ExecuteProcess(
+            cmd=['./rosboard/run'],
+            output='screen'
+        ),
+        launch.actions.ExecuteProcess(
             cmd=['ros2', 'launch', 'turtlebot3_bringup', 'robot.launch.py'],
             output='screen'
         ),
