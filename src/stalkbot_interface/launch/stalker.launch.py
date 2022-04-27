@@ -19,7 +19,7 @@ def generate_launch_description():
         ),
         launch_ros.actions.Node(
             package='package_opencv',
-            executable='vision'
+            executable='talker'
         )
     ])
 
