@@ -13,9 +13,14 @@
 # limitations under the License.
 
 from ast import Try
+
+from numpy import rec
 import rclpy
 from rclpy.node import Node
 import cv2
+from stalkbot_interface.msg import BoundingBox
+from stalkbot_interface.msg import PersonOpenCv
+
 
 from std_msgs.msg import String
 
@@ -62,7 +67,8 @@ class MinimalSubscriber(Node):
             'camera_topic',
             self.listener_callback,
             10)"""
-        self.publisher_ = self.create_publisher(String, 'rects_topic', 10)
+
+        self.publisher_ = self.create_publisher(PersonOpenCv, 'Persons', 10)
 
         #self.subscription  # prevent unused variable warning
         self.full_body_detector=Full_body_detector() #making detectors
@@ -83,7 +89,7 @@ class MinimalSubscriber(Node):
 
 
     def verwerkFoto(self, frame):
-
+        
         frame=cv2.resize(frame, (320, 240), interpolation = cv2.INTER_AREA)
         gray=cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
 
@@ -98,23 +104,51 @@ class MinimalSubscriber(Node):
 
         #print output
         self.get_logger().info('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        self.msg = PersonOpenCv()
+        self.msg.w = frame.shape[0]
+
         try:
             self.get_logger().info('Faces: "%s"' % rects_faces)
+            rects = BoundingBox()
+            rects.x = int(rects_faces[0][0])
+            rects.y = int(rects_faces[0][1])
+            rects.xx = int(rects_faces[0][2])
+            rects.yy = int(rects_faces[0][3])
+            self.msg.persons.append(rects)
         except:
             self.get_logger().info('No Face')
         try:
             self.get_logger().info('Body: "%s"' % rects_full_body)
+            rects = BoundingBox()
+            rects.x = int(rects_full_body[0][0])
+            rects.y = int(rects_full_body[0][1])
+            rects.xx = int(rects_full_body[0][2])
+            rects.yy = int(rects_full_body[0][3])
+            self.msg.persons.append(rects)
         except:
             self.get_logger().info('No full body')
         try:
             self.get_logger().info('Upper: "%s"' % rects_upper_body)
+            rects = BoundingBox()
+            rects.x = int(rects_upper_body[0][0])
+            rects.y = int(rects_upper_body[0][1])
+            rects.xx = int(rects_upper_body[0][2])
+            rects.yy = int(rects_upper_body[0][3])
+            self.msg.persons.append(rects)
         except:
             self.get_logger().info('No upper body')
         try:
             self.get_logger().info('Lower: "%s"' % rects_lower_body)
+            rects = BoundingBox()
+            rects.x = int(rects_lower_body[0][0])
+            rects.y = int(rects_lower_body[0][1])
+            rects.xx = int(rects_lower_body[0][2])
+            rects.yy = int(rects_lower_body[0][3])
+            self.msg.persons.append(rects)
         except:
             self.get_logger().info('No lower body')
 
+        self.publisher_.publish(self.msg)
         #Hier moet je message publishen
         
 
