@@ -73,14 +73,18 @@ class MinimalSubscriber(Node):
         self.upper_body_detector = Cascade_filter(1)
         self.lower_body_detector = Cascade_filter(2)
 
+        self.cap = cv2.VideoCapture(0)
+        timer_period = 0.1  # seconds
+        self.timer = self.create_timer(timer_period, self.verwerkFoto)
+        """
         cap = cv2.VideoCapture(0)
         while(True):
             ret, frame = cap.read()
             self.verwerkFoto(frame)
+        """
 
-
-    def verwerkFoto(self, frame):
-        
+    def verwerkFoto(self):
+        ret, frame = self.cap.read()
         frame=cv2.resize(frame, (320, 240), interpolation = cv2.INTER_AREA)
         gray=cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
 
