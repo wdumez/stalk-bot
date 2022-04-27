@@ -13,11 +13,16 @@
 # limitations under the License.
 
 from ast import Try
+
+from numpy import rec
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import cv2
+from stalkbot_interface.msg import BoundingBox
+from stalkbot_interface.msg import PersonOpenCv
+
 
 from std_msgs.msg import String
 
@@ -56,31 +61,25 @@ class MinimalSubscriber(Node):
 
     def __init__(self):
         super().__init__('minimal_subscriber')
-        """self.subscription = self.create_subscription(
-            String,
-            'camera_topic',
-            self.listener_callback,
-            10)"""
-        self.publisher_ = self.create_publisher(String, 'rects_topic', 10)
-        #processed image publisher
-        self.publisher_ = self.create_publisher(Image, 'video_frames', 10)
+
+        self.publisher_ = self.create_publisher(PersonOpenCv, 'Persons', 10)
+        self.processedImage = self.create_publisher(Image, 'video_frames', 10)
         self.br = CvBridge()
 
-        #self.subscription  # prevent unused variable warning
-        self.full_body_detector=Full_body_detector() #making detectors
+        #making detectors
+        self.full_body_detector=Full_body_detector()
         self.face_detector=Cascade_filter(0)
         self.upper_body_detector = Cascade_filter(1)
         self.lower_body_detector = Cascade_filter(2)
         
-        cap = cv2.VideoCapture(2)
-        while(True):
-            ret, frame = cap.read()
-            #cv2.imshow('frame', frame)
-            self.verwerkFoto(frame)
 
+        self.cap = cv2.VideoCapture(0)
+        FPS = 10
+        PUBLISH_TIME = 1 / FPS
+        self.timer = self.create_timer(PUBLISH_TIME, self.verwerkFoto)
 
-    def verwerkFoto(self, frame):
-
+    def verwerkFoto(self):
+        ret, frame = self.cap.read()
         frame=cv2.resize(frame, (320, 240), interpolation = cv2.INTER_AREA)
         gray=cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
 
@@ -93,28 +92,55 @@ class MinimalSubscriber(Node):
         #Lower body
         rects_lower_body=self.lower_body_detector.detect(gray)
 
-        #print output
+        #prepare output
         self.get_logger().info('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        self.msg = PersonOpenCv()
+        self.msg.w = frame.shape[0]
+
         try:
             self.get_logger().info('Faces: "%s"' % rects_faces)
+            rects = BoundingBox()
+            rects.x = int(rects_faces[0][0])
+            rects.y = int(rects_faces[0][1])
+            rects.xx = int(rects_faces[0][2])
+            rects.yy = int(rects_faces[0][3])
+            self.msg.persons.append(rects)
         except:
             self.get_logger().info('No Face')
         try:
             self.get_logger().info('Body: "%s"' % rects_full_body)
+            rects = BoundingBox()
+            rects.x = int(rects_full_body[0][0])
+            rects.y = int(rects_full_body[0][1])
+            rects.xx = int(rects_full_body[0][2])
+            rects.yy = int(rects_full_body[0][3])
+            self.msg.persons.append(rects)
         except:
             self.get_logger().info('No full body')
         try:
             self.get_logger().info('Upper: "%s"' % rects_upper_body)
+            rects = BoundingBox()
+            rects.x = int(rects_upper_body[0][0])
+            rects.y = int(rects_upper_body[0][1])
+            rects.xx = int(rects_upper_body[0][2])
+            rects.yy = int(rects_upper_body[0][3])
+            self.msg.persons.append(rects)
         except:
             self.get_logger().info('No upper body')
         try:
             self.get_logger().info('Lower: "%s"' % rects_lower_body)
+            rects = BoundingBox()
+            rects.x = int(rects_lower_body[0][0])
+            rects.y = int(rects_lower_body[0][1])
+            rects.xx = int(rects_lower_body[0][2])
+            rects.yy = int(rects_lower_body[0][3])
+            self.msg.persons.append(rects)
         except:
             self.get_logger().info('No lower body')
 
-        self.publisher_.publish(self.br.cv2_to_imgmsg(gray))
-        #Hier moet je message publishen
-        
+        #send output
+        self.publisher_.publish(self.msg)
+        self.processedImage.publish(self.br.cv2_to_imgmsg(frame))     
 
 
 def main(args=None):

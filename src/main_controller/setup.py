@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'package_opencv'
+package_name = 'main_controller'
 
 setup(
     name=package_name,
@@ -13,14 +13,14 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='yannick',
-    maintainer_email='yannick.saelen@gmail.com',
+    maintainer='milan',
+    maintainer_email='schepers.milan@gmail.com',
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'talker = package_opencv.CameraNode:main',
+            'main_controller = main_controller.main_controller:main'
         ],
     },
 )
