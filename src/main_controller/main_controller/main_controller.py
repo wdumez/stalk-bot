@@ -4,7 +4,7 @@ from tkinter import W
 from matplotlib.style import available
 import rclpy
 from rclpy.node import Node
-from stalkbot_interface.msg import MoveCommand, PersonOpenCv
+from stalkbot_interface.msg import MoveCommand, PersonOpenCv, BoundingBox
 
 
 
@@ -28,16 +28,15 @@ class MainController(Node):
 
 
     # Function that unpacks rectangle lists and returns if it was empty or where middle is
-    def unpack(rects):
+    def unpack(self, Box):
         middle = 0
         rects_not_empty = 0
         try:
-            for column, row, width, height in rects:
-                if(column < 0):
-                    raise ValueError
-                print(column, width)
-                middle = column + (width/2)
-                rects_not_empty = 1
+            if(Box.x < 0):
+                raise ValueError
+            print(Box.x, Box.xx)
+            middle = Box.x + (Box.xx/2)
+            rects_not_empty = 1
         except Exception as e:
             print(e)
     
@@ -69,7 +68,7 @@ class MainController(Node):
             print("alles leeg")
 
         #if one faces is detected send message "Stoppen"
-        if(len(rects_faces) != 0):
+        if(rects_faces.x < 0):
             self.main_msg.move_forward = False
             self.main_msg.rotate_left = False
             self.main_msg.rotate_right = False
