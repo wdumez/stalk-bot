@@ -1,7 +1,3 @@
-
-from tkinter import W
-
-from matplotlib.style import available
 import rclpy
 from rclpy.node import Node
 from stalkbot_interface.msg import MoveCommand, PersonOpenCv, BoundingBox

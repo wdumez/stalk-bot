@@ -1,6 +1,4 @@
 """Contains the node for making the turtlebot move."""
-import imp
-from re import I
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist

@@ -1,6 +1,4 @@
-from ast import Try
 import cv2
-from numpy import rec
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
