@@ -10,8 +10,8 @@ class MovementController(Node):
     """Makes the turtlebot move according to incoming commands."""
 
     MOVEMENT_UPDATE_TIME = 0.01  # seconds
-    MOVE_SPEED = 0.2
-    ROTATE_SPEED = 1
+    MOVE_SPEED = 0.1
+    ROTATE_SPEED = 1.0
 
     def __init__(self):
         super().__init__('movement_controller')
