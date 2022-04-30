@@ -9,10 +9,10 @@ def generate_launch_description():
             cmd=['export', 'ROS_DOMAIN_ID=1'],
             output='screen'
         ),
-        launch.actions.ExecuteProcess(
-            cmd=['/home/ubuntu/rosboard/run'], # for turtlebot
-            output='screen'
-        ),
+        # launch.actions.ExecuteProcess(
+        #     cmd=['/home/ubuntu/rosboard/run'], # for turtlebot
+        #     output='screen'
+        # ),
         launch.actions.ExecuteProcess(
             cmd=['export', 'TURTLEBOT3_MODEL=burger'],
             output='screen'
