@@ -1,7 +1,10 @@
 """Contains the node for making the turtlebot move."""
+import imp
+from re import I
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
+from stalkbot_interface.msg import PersonOpenCv,BoundingBox
 from stalkbot_interface.msg import MoveCommand
 
 
@@ -30,6 +33,38 @@ class MovementController(Node):
         )
 
         # Subscribe to the incoming commands
+        # TODO no custom message yet
+        self.subscription = self.create_subscription(
+            PersonOpenCv, # msg type
+            'person_data', # topic name
+            self.send_move_commands, # callback
+            10) # queue size?
+        self.subscription  # prevent unused variable warning
+        # msg = PersonOpenCv()                                       # CHANGE
+        # # msg.face_detected = False
+        # msg.person_detected = False
+        # msg.persons
+
+        # TODO currently faking some commands
+        get_commands_period = 1.5  # seconds
+        self.get_commands_timer = self.create_timer(
+            get_commands_period, self.get_commands)
+
+    def get_commands(self):
+        """Dummy function to simulate some commands (alternates)."""
+        if self.move_forward:
+            self.move_forward = False
+        else:
+            self.move_forward = True
+        if self.rotate_left:
+            self.rotate_left = False
+            self.rotate_right = True
+        else:
+            self.rotate_left = True
+            self.rotate_right = False
+        self.get_logger().info("Updated state with new commands.")
+
+    def send_move_commands(self):
         self.subscription = self.create_subscription(
             MoveCommand,  # msg type
             'move_command',  # topic name
