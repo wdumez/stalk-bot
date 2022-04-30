@@ -21,7 +21,7 @@ class MainController(Node):
         # Subscribe to the incoming commands
         self.subscription = self.create_subscription(
             PersonOpenCv,  # msg type
-            'Persons',  # topic name
+            'persons',  # topic name
             self.send_main_command,  # callback
             10)  # queue size?
         self.subscription  # prevent unused variable warning

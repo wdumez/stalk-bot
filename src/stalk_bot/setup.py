@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'main_controller'
+package_name = 'stalk_bot'
 
 setup(
     name=package_name,
@@ -13,14 +13,16 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='milan',
-    maintainer_email='schepers.milan@gmail.com',
+    maintainer='william',
+    maintainer_email='william.dumez@skynet.be',
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'main_controller = main_controller.main_controller:main'
+            'movement = stalk_bot.movement_controller:main',
+            'camera = stalk_bot.camera_controller:main',
+            'main = stalk_bot.main_controller:main'
         ],
     },
 )

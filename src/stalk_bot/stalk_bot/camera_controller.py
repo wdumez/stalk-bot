@@ -1,29 +1,11 @@
-# Copyright 2016 Open Source Robotics Foundation, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 from ast import Try
-
+import cv2
 from numpy import rec
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
-import cv2
-from stalkbot_interface.msg import BoundingBox
-from stalkbot_interface.msg import PersonOpenCv
-
-
+from stalkbot_interface.msg import BoundingBox, PersonOpenCv
 from std_msgs.msg import String
 
 class Cascade_filter():
@@ -57,12 +39,12 @@ class Full_body_detector():
         rects, weights = detected_persons
         return rects
 
-class MinimalSubscriber(Node):
+class CameraController(Node):
 
     def __init__(self):
-        super().__init__('minimal_subscriber')
+        super().__init__('camera_controller')
 
-        self.publisher_ = self.create_publisher(PersonOpenCv, 'Persons', 10)
+        self.publisher_ = self.create_publisher(PersonOpenCv, 'persons', 10)
         self.processedImage = self.create_publisher(Image, 'video_frames', 10)
         self.br = CvBridge()
 
@@ -175,7 +157,7 @@ class MinimalSubscriber(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    minimal_subscriber = MinimalSubscriber()
+    minimal_subscriber = CameraController()
 
     rclpy.spin(minimal_subscriber)
 
