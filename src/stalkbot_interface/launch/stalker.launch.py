@@ -6,7 +6,7 @@ import launch_ros.actions
 def generate_launch_description():
     return launch.LaunchDescription([
         launch.actions.ExecuteProcess(
-            cmd=['./rosboard/run'],
+            cmd=['/home/ubuntu/rosboard/run'], # for turtlebot
             output='screen'
         ),
         launch.actions.ExecuteProcess(
@@ -14,12 +14,16 @@ def generate_launch_description():
             output='screen'
         ),
         launch_ros.actions.Node(
-            package='motor',
-            executable='movement_controller'
+            package='stalk_bot',
+            executable='movement'
         ),
         launch_ros.actions.Node(
-            package='package_opencv',
-            executable='talker'
+            package='stalk_bot',
+            executable='camera'
+        ),
+        launch_ros.actions.Node(
+            package='stalk_bot',
+            executable='main'
         )
     ])
 
