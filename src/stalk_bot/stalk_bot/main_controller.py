@@ -64,7 +64,7 @@ class MainController(Node):
             print("alles leeg")
 
         #if one faces is detected send message "Stoppen"
-        if(rects_faces.x > 0 or (rects_faces < -1 and not(rects_full_body_not_empty and rects_upper_body_not_empty and rects_lower_body_not_empty))):
+        if(rects_faces.x > 0 ):
             self.main_msg.move_forward = False
             self.main_msg.rotate_left = False
             self.main_msg.rotate_right = False
