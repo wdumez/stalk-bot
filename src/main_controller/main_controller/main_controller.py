@@ -27,16 +27,20 @@ class MainController(Node):
         self.subscription  # prevent unused variable warning
 
 
+    # Function that unpacks rectangle lists and returns if it was empty or where middle is
     def unpack(rects):
         middle = 0
         rects_not_empty = 0
         try:
             for column, row, width, height in rects:
+                if(column < 0):
+                    raise ValueError
                 print(column, width)
                 middle = column + (width/2)
                 rects_not_empty = 1
-        except:
-            print("Ween")
+        except Exception as e:
+            print(e)
+    
             
         return middle, rects_not_empty
 
