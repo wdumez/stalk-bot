@@ -74,6 +74,11 @@ class MinimalSubscriber(Node):
         
 
         self.cap = cv2.VideoCapture(0)
+        if not self.cap.isOpened():
+            self.get_logger().info('Cap is not opened')
+            self.cap.open()
+        if not self.cap.isOpened():
+            self.get_logger().info('Cap did still not open')
         FPS = 10
         PUBLISH_TIME = 1 / FPS
         self.timer = self.create_timer(PUBLISH_TIME, self.verwerkFoto)
