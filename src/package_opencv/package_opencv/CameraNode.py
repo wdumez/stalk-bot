@@ -92,6 +92,12 @@ class MinimalSubscriber(Node):
         self.msg = PersonOpenCv()
         self.msg.w = frame.shape[0]
 
+        Null = BoundingBox()
+        Null.x = -1
+        Null.y = -1
+        Null.xx = -1
+        Null.yy = -1
+
         try:
             self.get_logger().info('Faces: "%s"' % rects_faces)
             rects = BoundingBox()
@@ -104,6 +110,7 @@ class MinimalSubscriber(Node):
             frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (250, 0, 0), 2)
         except:
             self.get_logger().info('No Face')
+            self.msg.persons.append(Null)
         try:
             self.get_logger().info('Body: "%s"' % rects_full_body)
             rects = BoundingBox()
@@ -117,6 +124,8 @@ class MinimalSubscriber(Node):
 
         except:
             self.get_logger().info('No full body')
+            self.msg.persons.append(Null)
+
         try:
             self.get_logger().info('Upper: "%s"' % rects_upper_body)
             rects = BoundingBox()
@@ -130,6 +139,8 @@ class MinimalSubscriber(Node):
 
         except:
             self.get_logger().info('No upper body')
+            self.msg.persons.append(Null)
+
         try:
             self.get_logger().info('Lower: "%s"' % rects_lower_body)
             rects = BoundingBox()
@@ -143,6 +154,8 @@ class MinimalSubscriber(Node):
 
         except:
             self.get_logger().info('No lower body')
+            self.msg.persons.append(Null)
+
 
         #send output
         self.publisher_.publish(self.msg)        
