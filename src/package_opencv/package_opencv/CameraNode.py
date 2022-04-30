@@ -17,6 +17,8 @@ from ast import Try
 from numpy import rec
 import rclpy
 from rclpy.node import Node
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
 import cv2
 from stalkbot_interface.msg import BoundingBox
 from stalkbot_interface.msg import PersonOpenCv
@@ -39,8 +41,8 @@ class Cascade_filter():
             print("Value has to be between 0 and 2")
 
     def detect(self, gray_frame):
-        detected_upper = self.detector.detectMultiScale3(gray_frame, outputRejectLevels=True)
-        rects, weights, score = detected_upper
+        #detected_upper = self.detector.detectMultiScale3(gray_frame, outputRejectLevels=True)
+        rects, weights, score = 0,0,0 #detected_upper
 
         return rects
 
@@ -61,12 +63,15 @@ class MinimalSubscriber(Node):
         super().__init__('minimal_subscriber')
 
         self.publisher_ = self.create_publisher(PersonOpenCv, 'Persons', 10)
+        self.processedImage = self.create_publisher(Image, 'video_frames', 10)
+        self.br = CvBridge()
 
         #making detectors
         self.full_body_detector=Full_body_detector()
         self.face_detector=Cascade_filter(0)
         self.upper_body_detector = Cascade_filter(1)
         self.lower_body_detector = Cascade_filter(2)
+        
 
         self.cap = cv2.VideoCapture(0)
         FPS = 10
@@ -158,7 +163,8 @@ class MinimalSubscriber(Node):
 
 
         #send output
-        self.publisher_.publish(self.msg)        
+        self.publisher_.publish(self.msg)
+        self.processedImage.publish(self.br.cv2_to_imgmsg(frame))     
 
 
 def main(args=None):

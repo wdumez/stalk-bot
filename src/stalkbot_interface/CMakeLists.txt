@@ -37,5 +37,10 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   DEPENDENCIES
 )
 
+# Install launch files.
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+)
 
 ament_package()
