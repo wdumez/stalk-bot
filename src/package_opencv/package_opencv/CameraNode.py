@@ -41,8 +41,8 @@ class Cascade_filter():
             print("Value has to be between 0 and 2")
 
     def detect(self, gray_frame):
-        #detected_upper = self.detector.detectMultiScale3(gray_frame, outputRejectLevels=True)
-        rects, weights, score = 0,0,0 #detected_upper
+        detected_upper = self.detector.detectMultiScale3(gray_frame, outputRejectLevels=True)
+        rects, weights, score = detected_upper
 
         return rects
 
