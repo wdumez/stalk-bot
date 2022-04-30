@@ -54,11 +54,6 @@ class CameraController(Node):
         
 
         self.cap = cv2.VideoCapture(0)
-        if not self.cap.isOpened():
-            self.get_logger().info('Cap is not opened')
-            self.cap.open()
-        if not self.cap.isOpened():
-            self.get_logger().info('Cap did still not open')
         FPS = 10
         PUBLISH_TIME = 1 / FPS
         self.timer = self.create_timer(PUBLISH_TIME, self.verwerkFoto)
@@ -78,7 +73,7 @@ class CameraController(Node):
         rects_lower_body=self.lower_body_detector.detect(gray)
 
         #prepare output
-        self.get_logger().info('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        # self.get_logger().info('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         self.msg = PersonOpenCv()
         self.msg.w = frame.shape[0]
 
@@ -89,7 +84,7 @@ class CameraController(Node):
         Null.yy = -1
 
         try:
-            self.get_logger().info('Faces: "%s"' % rects_faces)
+            # self.get_logger().info('Faces: "%s"' % rects_faces)
             rects = BoundingBox()
             rects.x = int(rects_faces[0][0])
             rects.y = int(rects_faces[0][1])
@@ -99,10 +94,10 @@ class CameraController(Node):
 
             frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (250, 0, 0), 2)
         except:
-            self.get_logger().info('No Face')
+            # self.get_logger().info('No Face')
             self.msg.persons.append(Null)
         try:
-            self.get_logger().info('Body: "%s"' % rects_full_body)
+            # self.get_logger().info('Body: "%s"' % rects_full_body)
             rects = BoundingBox()
             rects.x = int(rects_full_body[0][0])
             rects.y = int(rects_full_body[0][1])
@@ -113,11 +108,11 @@ class CameraController(Node):
             frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (0, 0, 255), 2)
 
         except:
-            self.get_logger().info('No full body')
+            # self.get_logger().info('No full body')
             self.msg.persons.append(Null)
 
         try:
-            self.get_logger().info('Upper: "%s"' % rects_upper_body)
+            # self.get_logger().info('Upper: "%s"' % rects_upper_body)
             rects = BoundingBox()
             rects.x = int(rects_upper_body[0][0])
             rects.y = int(rects_upper_body[0][1])
@@ -128,11 +123,11 @@ class CameraController(Node):
             frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (0, 255, 0), 2)
 
         except:
-            self.get_logger().info('No upper body')
+            # self.get_logger().info('No upper body')
             self.msg.persons.append(Null)
 
         try:
-            self.get_logger().info('Lower: "%s"' % rects_lower_body)
+            # self.get_logger().info('Lower: "%s"' % rects_lower_body)
             rects = BoundingBox()
             rects.x = int(rects_lower_body[0][0])
             rects.y = int(rects_lower_body[0][1])
@@ -143,7 +138,7 @@ class CameraController(Node):
             frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (250, 255, 0), 2)
 
         except:
-            self.get_logger().info('No lower body')
+            # self.get_logger().info('No lower body')
             self.msg.persons.append(Null)
 
 
