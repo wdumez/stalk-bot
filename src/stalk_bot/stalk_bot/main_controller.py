@@ -40,7 +40,7 @@ class MainController(Node):
         return middle, rects_not_empty
 
     #Defines how large the window has to be
-    WINDOW_WIDTH = 20
+    WINDOW_WIDTH = 45
 
     def send_main_command(self, msg): 
         
