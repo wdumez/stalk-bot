@@ -76,15 +76,15 @@ class MainController(Node):
             #person is on the right of the screen
             if(average_middle > window[1]):
                 self.main_msg.move_forward = False
-                self.main_msg.rotate_left = True
-                self.main_msg.rotate_right = False
+                self.main_msg.rotate_left = False
+                self.main_msg.rotate_right = True
                 self.main_publisher.publish(self.main_msg)
                 return
             #person is on the left of the screen
             if(average_middle < window[0]):
                 self.main_msg.move_forward = False
-                self.main_msg.rotate_left = False
-                self.main_msg.rotate_right = True
+                self.main_msg.rotate_left = True
+                self.main_msg.rotate_right = False
                 self.main_publisher.publish(self.main_msg)
                 return
             #if none of these are fullfilled --> person is in the window you can drive forward
