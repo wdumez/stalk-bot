@@ -18,6 +18,8 @@ class MovementController(Node):
     def __init__(self):
         super().__init__('movement_controller')
         self.vel_msg = Twist()
+        self.vel_msg.linear.x = 0.0
+        self.vel_msg.angular.z = 0.0
         # Parameters that do not change
         self.vel_msg.linear.y = 0.0
         self.vel_msg.linear.z = 0.0
@@ -33,38 +35,6 @@ class MovementController(Node):
         )
 
         # Subscribe to the incoming commands
-        # TODO no custom message yet
-        self.subscription = self.create_subscription(
-            PersonOpenCv, # msg type
-            'person_data', # topic name
-            self.send_move_commands, # callback
-            10) # queue size?
-        self.subscription  # prevent unused variable warning
-        # msg = PersonOpenCv()                                       # CHANGE
-        # # msg.face_detected = False
-        # msg.person_detected = False
-        # msg.persons
-
-        # TODO currently faking some commands
-        get_commands_period = 1.5  # seconds
-        self.get_commands_timer = self.create_timer(
-            get_commands_period, self.get_commands)
-
-    def get_commands(self):
-        """Dummy function to simulate some commands (alternates)."""
-        if self.move_forward:
-            self.move_forward = False
-        else:
-            self.move_forward = True
-        if self.rotate_left:
-            self.rotate_left = False
-            self.rotate_right = True
-        else:
-            self.rotate_left = True
-            self.rotate_right = False
-        self.get_logger().info("Updated state with new commands.")
-
-    def send_move_commands(self):
         self.subscription = self.create_subscription(
             MoveCommand,  # msg type
             'move_command',  # topic name
@@ -74,7 +44,7 @@ class MovementController(Node):
 
     def update_move_commands(self, msg):
         """
-        Update and publish self.vel_msg with the right
+        Update self.vel_msg with the right
         parameters according to the current state.
         """
         # ! You must specify these values as float,
