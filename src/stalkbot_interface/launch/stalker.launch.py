@@ -6,7 +6,7 @@ import launch_ros.actions
 def generate_launch_description():
     return launch.LaunchDescription([
         launch.actions.ExecuteProcess(
-            cmd=['export', 'ROS_DOMAIN_ID=1'],
+            cmd=['export', 'ROS_DOMAIN_ID=9'],
             output='screen'
         ),
         # launch.actions.ExecuteProcess(
