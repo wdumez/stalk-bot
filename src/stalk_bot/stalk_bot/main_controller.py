@@ -6,9 +6,6 @@ from stalkbot_interface.msg import MoveCommand, PersonOpenCv, BoundingBox
 
 class MainController(Node):
     """"Makes the movement decision, based on detected persons"""
-    
-    COUNTER_UPDATE_TIME = 0.1
-    COUNTER_MAX = 5
 
     def __init__(self):
         super().__init__('main_controller')
@@ -25,12 +22,6 @@ class MainController(Node):
             10)  # queue size?
         self.subscription  # prevent unused variable warning
         
-        # Wait for searching
-        self.counter = 0
-        self.move_timer = self.create_timer(
-            MainController.COUNTER_UPDATE_TIME,
-            self.increment_counter  # callback
-        )
     
     def increment_counter(self):
         """Increment the counter."""
@@ -107,20 +98,11 @@ class MainController(Node):
             self.main_publisher.publish(self.main_msg)
             return
             
-        #nothing detected at all --> search a person
-        # But only if the counter has reached its maximum
-        if self.counter >= MainController.COUNTER_MAX:
-            self.counter = 0
-            self.main_msg.move_forward = False
-            self.main_msg.rotate_left = False
-            self.main_msg.rotate_right = True
-            self.main_publisher.publish(self.main_msg)
-        else:
-            # do not move
-            self.main_msg.move_forward = False
-            self.main_msg.rotate_left = False
-            self.main_msg.rotate_right = False
-            self.main_publisher.publish(self.main_msg)
+        self.counter = 0
+        self.main_msg.move_forward = False
+        self.main_msg.rotate_left = False
+        self.main_msg.rotate_right = True
+        self.main_publisher.publish(self.main_msg)
         return
 
        
