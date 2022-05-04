@@ -89,10 +89,10 @@ class CameraController(Node):
         try:
             # self.get_logger().info('Faces: "%s"' % rects_faces)
             rects = BoundingBox()
-            rects.x = int(rects_faces[0][0])
-            rects.y = int(rects_faces[0][1])
-            rects.xx = int(rects_faces[0][2])
-            rects.yy = int(rects_faces[0][3])
+            rects.x = int(rects_full_body[0][0])
+            rects.y = int(rects_full_body[0][1])
+            rects.xx = int(rects_full_body[0][2])
+            rects.yy = int(rects_full_body[0][3])
             self.msg.persons.append(rects)
 
             frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (250, 0, 0), 2)
@@ -102,10 +102,10 @@ class CameraController(Node):
         try:
             # self.get_logger().info('Body: "%s"' % rects_full_body)
             rects = BoundingBox()
-            rects.x = int(rects_full_body[0][0])
-            rects.y = int(rects_full_body[0][1])
-            rects.xx = int(rects_full_body[0][2])
-            rects.yy = int(rects_full_body[0][3])
+            rects.x = int(rects_faces[0][0])
+            rects.y = int(rects_faces[0][1])
+            rects.xx = int(rects_faces[0][2])
+            rects.yy = int(rects_faces[0][3])
             self.msg.persons.append(rects)
 
             frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (0, 0, 255), 2)
