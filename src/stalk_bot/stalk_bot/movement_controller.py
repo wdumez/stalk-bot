@@ -2,7 +2,6 @@
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
-from stalkbot_interface.msg import PersonOpenCv,BoundingBox
 from stalkbot_interface.msg import MoveCommand
 
 
@@ -49,7 +48,6 @@ class MovementController(Node):
         # ! otherwise you will get an error.
         # positive linear x is move forward
         # positive angular z is rotate right
-        # self.get_logger().info('Updating commands based on incoming msg')
         if msg.move_forward:
             self.vel_msg.linear.x = MovementController.MOVE_SPEED
         else:
@@ -63,7 +61,6 @@ class MovementController(Node):
 
     def pubish_msg(self):
         """Publish the Twist message to make the robot move."""
-        # self.get_logger().info('Publishing move commands to cmd_vel')
         self.move_publisher.publish(self.vel_msg)
 
 
