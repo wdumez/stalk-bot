@@ -47,10 +47,10 @@ class CameraController(Node):
         self.br = CvBridge()
 
         #making detectors
-        self.full_body_detector=Full_body_detector()
+        # self.full_body_detector=Full_body_detector()
         self.face_detector=Cascade_filter(0)
         self.upper_body_detector = Cascade_filter(1)
-        #self.lower_body_detector = Cascade_filter(2)
+        self.lower_body_detector = Cascade_filter(2)
         
 
         self.cap = cv2.VideoCapture(0)
@@ -64,15 +64,16 @@ class CameraController(Node):
         gray=cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
 
         #Detect Persons
-        rects_full_body=self.full_body_detector.detect_full_body(gray)
+        # rects_full_body=self.full_body_detector.detect_full_body(gray)
         #Detect Faces
         rects_faces=self.face_detector.detect(gray)
         #Upper body
         rects_upper_body=self.upper_body_detector.detect(gray)
         #Lower body
-        #rects_lower_body=self.lower_body_detector.detect(gray)
+        rects_lower_body=self.lower_body_detector.detect(gray)
         # rects_upper_body = []
-        rects_lower_body = []
+        # rects_lower_body = []
+        rects_full_body = []
 
         #prepare output
         # self.get_logger().info('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
@@ -137,7 +138,7 @@ class CameraController(Node):
             rects.yy = int(rects_lower_body[0][3])
             self.msg.persons.append(rects)
 
-            #frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (250, 255, 0), 2)
+            frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (250, 255, 0), 2)
 
         except:
             # self.get_logger().info('No lower body')
