@@ -10,7 +10,7 @@ class MainController(Node):
         super().__init__('main_controller')
 
         self.main_msg = MoveCommand()
-
+        self.last_rotate = 'right'
         self.main_publisher = self.create_publisher(
             MoveCommand, 'move_command', 10)
 
@@ -84,6 +84,7 @@ class MainController(Node):
                 self.main_msg.rotate_left = False
                 self.main_msg.rotate_right = True
                 self.main_publisher.publish(self.main_msg)
+                last_rotate = 'right'
                 return
             # person is on the left of the screen
             if(average_middle < window[0]):
@@ -91,6 +92,7 @@ class MainController(Node):
                 self.main_msg.rotate_left = True
                 self.main_msg.rotate_right = False
                 self.main_publisher.publish(self.main_msg)
+                last_rotate = 'left'
                 return
             # if none of these are fullfilled
             # then the person is in the window so you can drive forward
@@ -101,9 +103,14 @@ class MainController(Node):
             return
 
         # If nothing was detected: search
+        # Rotate in direction it was rotating
         self.main_msg.move_forward = False
-        self.main_msg.rotate_left = False
-        self.main_msg.rotate_right = True
+        if last_rotate == 'right':
+            self.main_msg.rotate_left = False
+            self.main_msg.rotate_right = True
+        elif last_rotate == 'left':
+            self.main_msg.rotate_left = True
+            self.main_msg.rotate_right = False
         self.main_publisher.publish(self.main_msg)
         return
 
