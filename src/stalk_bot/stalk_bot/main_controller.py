@@ -22,10 +22,6 @@ class MainController(Node):
             10)  # queue size?
         self.subscription  # prevent unused variable warning
         
-    
-    def increment_counter(self):
-        """Increment the counter."""
-        self.counter += 1
 
     # Function that unpacks rectangle lists and returns if it was empty or where middle is
     def unpack(self, Box):
@@ -98,7 +94,6 @@ class MainController(Node):
             self.main_publisher.publish(self.main_msg)
             return
             
-        self.counter = 0
         self.main_msg.move_forward = False
         self.main_msg.rotate_left = False
         self.main_msg.rotate_right = True
