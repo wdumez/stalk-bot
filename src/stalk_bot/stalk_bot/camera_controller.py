@@ -71,6 +71,8 @@ class CameraController(Node):
         #rects_upper_body=self.upper_body_detector.detect(gray)
         #Lower body
         #rects_lower_body=self.lower_body_detector.detect(gray)
+        rects_upper_body = []
+        rects_lower_body = []
 
         #prepare output
         # self.get_logger().info('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
