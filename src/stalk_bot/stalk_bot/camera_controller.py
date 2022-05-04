@@ -49,8 +49,8 @@ class CameraController(Node):
         #making detectors
         self.full_body_detector=Full_body_detector()
         self.face_detector=Cascade_filter(0)
-        self.upper_body_detector = Cascade_filter(1)
-        self.lower_body_detector = Cascade_filter(2)
+        #self.upper_body_detector = Cascade_filter(1)
+        #self.lower_body_detector = Cascade_filter(2)
         
 
         self.cap = cv2.VideoCapture(0)
@@ -68,9 +68,9 @@ class CameraController(Node):
         #Detect Faces
         rects_faces=self.face_detector.detect(gray)
         #Upper body
-        rects_upper_body=self.upper_body_detector.detect(gray)
+        #rects_upper_body=self.upper_body_detector.detect(gray)
         #Lower body
-        rects_lower_body=self.lower_body_detector.detect(gray)
+        #rects_lower_body=self.lower_body_detector.detect(gray)
 
         #prepare output
         # self.get_logger().info('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
@@ -92,7 +92,7 @@ class CameraController(Node):
             rects.yy = int(rects_faces[0][3])
             self.msg.persons.append(rects)
 
-            frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (250, 0, 0), 2)
+            #frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (250, 0, 0), 2)
         except:
             # self.get_logger().info('No Face')
             self.msg.persons.append(Null)
@@ -105,7 +105,7 @@ class CameraController(Node):
             rects.yy = int(rects_full_body[0][3])
             self.msg.persons.append(rects)
 
-            frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (0, 0, 255), 2)
+            #frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (0, 0, 255), 2)
 
         except:
             # self.get_logger().info('No full body')
@@ -120,7 +120,7 @@ class CameraController(Node):
             rects.yy = int(rects_upper_body[0][3])
             self.msg.persons.append(rects)
 
-            frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (0, 255, 0), 2)
+            #frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (0, 255, 0), 2)
 
         except:
             # self.get_logger().info('No upper body')
@@ -135,7 +135,7 @@ class CameraController(Node):
             rects.yy = int(rects_lower_body[0][3])
             self.msg.persons.append(rects)
 
-            frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (250, 255, 0), 2)
+            #frame = cv2.rectangle(frame, (rects.x, rects.y, rects.xx, rects.yy), (250, 255, 0), 2)
 
         except:
             # self.get_logger().info('No lower body')
@@ -144,7 +144,7 @@ class CameraController(Node):
 
         #send output
         self.publisher_.publish(self.msg)
-        self.processedImage.publish(self.br.cv2_to_imgmsg(frame, encoding="bgr8"))     
+        #self.processedImage.publish(self.br.cv2_to_imgmsg(frame, encoding="bgr8"))     
 
 
 def main(args=None):
