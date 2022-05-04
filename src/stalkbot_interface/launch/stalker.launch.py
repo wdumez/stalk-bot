@@ -25,10 +25,11 @@ def generate_launch_description():
             package='stalk_bot',
             executable='movement'
         ),
+        """"
         launch_ros.actions.Node(
             package='stalk_bot',
             executable='camera'
-        ),
+        ),"""""
         launch_ros.actions.Node(
             package='stalk_bot',
             executable='main'
