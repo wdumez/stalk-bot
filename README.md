@@ -1,39 +1,51 @@
-# stalk-bot 
+# stalk-bot
+
+We created a robot that can detect people in its field of view, and then chase them slowly. The original plan was to make the robot chase only when the person was not looking, however this gave unreliable results so instead the robot chases regardless of whether the person is looking or not.
+
+Faces and people are detected using Viola & Jones Haar features as well as HOG.
+TODO more explanation
+
+## Authors
+
+TODO
 
 ## Planning
 
-We use [this online tool](https://www.onlinegantt.com/#/gantt) to make the planning.
+We used [this online tool](https://www.onlinegantt.com/#/gantt) to make the planning.
 
 ![Our planning](./planning/Online%20Gantt%2020220323.png)
 
-## kasper NOTES
+## Node graph
 
-### builden van workspace: IMPORTANT: enkel in root van je ros workspace (bij ons {....}/STALK-BOT)
+TODO image of node graph
+
+## Working with ROS
+
+### build your workspace (execute in root of workspace)
 
 `colcon build` 
 
-### bij grote projecten kan het handig zijn om de package enkel te laten builden als de rest niet veranderd is
+### build only select packages
 
 `colcon build --packages-select <package_name>`
 
-### elke terminal voor het runnen van ros commandos (bv: ros2 run ... ...) moet je de workspace sources waar de packages zijn die je gebruikt
+### using ros commands requires sourcing in any terminal
 
 `. install/setup.bash`
 
-### grafische voorstelling van nodes en topics
+### get a graphic representation of nodes and graphs
 
 `rqt_graph`
 
-### terminal print van data gecast door <TOPIC>
+### get a terminal print of data cast be a certain topic
 
 `ros2 topic echo <TOPIC>`
 
-### aanmaken van een nieuwe package
+### create a new package (execute in src folder)
 
 `ros2 pkg create --build-type ament_python <package_name>`
 
 ## Github workflow
-
 
 ### Creating new branches
 
