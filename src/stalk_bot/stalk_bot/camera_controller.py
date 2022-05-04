@@ -146,7 +146,7 @@ class CameraController(Node):
 
         #send output
         self.publisher_.publish(self.msg)
-        #self.processedImage.publish(self.br.cv2_to_imgmsg(frame, encoding="bgr8"))     
+        self.processedImage.publish(self.br.cv2_to_imgmsg(frame, encoding="bgr8"))     
 
 
 def main(args=None):

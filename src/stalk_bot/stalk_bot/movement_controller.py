@@ -11,7 +11,7 @@ class MovementController(Node):
 
     MOVEMENT_UPDATE_TIME = 0.01  # seconds
     MOVE_SPEED = 0.1
-    ROTATE_SPEED = 1.0
+    ROTATE_SPEED = 0.5
 
     def __init__(self):
         super().__init__('movement_controller')
