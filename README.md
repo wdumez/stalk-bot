@@ -4,7 +4,10 @@ We set out to create a robot that can detect people in its field of vision, and 
 
 Throughout the development it became clear that our method of detecting people was not robust enough to properly implement this behaviour, so instead the functionality shifted towards chasing people regardless of whether they were looking at the robot or not.
 
-TODO explain how we detect people (short paragraph on CameraController, Viola&Jones and HOG)
+To detect people and their faces, we made use of the OpenCV cascade filters and HOG filter. We chose these filters because of their light weight on the Raspberry and they are easy to use with OpenCV in Python.
+In the beginnen we made use of three cascade filters. One for detecting faces, one for detecting people's upperbody and the last one for detecting people's lowerbody. We also made use of a HOG filter to detect whole people.
+After deploying these filters on the frame, we send the bounding boxes to the next node.
+After some experiments we desided not make use of the HOG filter. We made this desicion to increase the speed of our code and because their was almost no time when their was a whole person in picture.
 
 TODO explain MainController and decision making
 
