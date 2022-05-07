@@ -13,19 +13,19 @@ Finally, the `MovementController` node processes the top-level commands and publ
 
 ## Authors
 
-Jasper Govaerts
-Jente Driesen
-Kasper De Burghgraeve
-Milan Schepers
-Thomas Segaert - CEO
-William Dumez - CCO
-Yannick Saelen
+- Jasper Govaerts
+- Jente Driesen
+- Kasper De Burghgraeve
+- Milan Schepers
+- Thomas Segaert - CEO
+- William Dumez - CCO
+- Yannick Saelen
 
 ## Planning
 
 We used [this free online tool](https://www.onlinegantt.com/#/gantt) to make the planning.
 
-![Our planning](./planning/Online%20Gantt%2020220323.png)
+![Our planning](./planning/planning_v2.png)
 
 ## Trello
 
@@ -63,13 +63,13 @@ This node graph was obtained using `rqt_graph` and shows our custom nodes and to
 
 `ros2 pkg create --build-type ament_python <package_name>`
 
-## Run a node
+### Run a node
 
 You must first configure the entry point in the package's `setup.py` file.
 
 `ros2 run <package_name> <entry_point>`
 
-## run our launch file
+### run our launch file
 
 This launch file has been configured to run all required nodes for our program.
 
@@ -77,7 +77,7 @@ This launch file has been configured to run all required nodes for our program.
 
 ## Our Github workflow
 
-(This is a short tutorial for those who have not used git & github before.)
+(This was a short tutorial for those who had not used git & github before.)
 
 ### Creating new branches
 
