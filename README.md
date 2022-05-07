@@ -1,51 +1,81 @@
 # stalk-bot
 
-We created a robot that can detect people in its field of view, and then chase them slowly. The original plan was to make the robot chase only when the person was not looking, however this gave unreliable results so instead the robot chases regardless of whether the person is looking or not.
+We set out to create a robot that can detect people in its field of vision, and then chase them only when they are not looking. This behaviour was inspired by the Weeping Angels from Doctor Who and the Boos from Mario. Because this makes it look like the robot is stalking people, we dubbed this project "stalk-bot".
 
-Faces and people are detected using Viola & Jones Haar features as well as HOG.
-TODO more explanation
+TODO explain how we detect people (short paragraph on CameraController, Viola&Jones and HOG)
+
+The 
+
+Throughout the development it became clear that our method of detecting people was not robust enough to properly implement this behaviour, so instead the functionality shifted towards chasing people regardless of whether they were looking at the robot or not.
+
 
 ## Authors
 
-TODO
+Jasper Govaerts
+Jente Driesen
+Kasper De Burghgraeve
+Milan Schepers
+Thomas Segaert - CEO
+William Dumez - CCO
+Yannick Saelen
 
 ## Planning
 
-We used [this online tool](https://www.onlinegantt.com/#/gantt) to make the planning.
+We used [this free online tool](https://www.onlinegantt.com/#/gantt) to make the planning.
 
 ![Our planning](./planning/Online%20Gantt%2020220323.png)
 
+## Trello
+
+We used Trello to keep track of weekly tasks. You can use [this](https://l.messenger.com/l.php?u=https%3A%2F%2Ftrello.com%2Finvite%2Fb%2FQkdTKCNW%2Fafb660e5a34bca409ec5872ddadd8a15%2Fsee-angel-reaper&h=AT2c3liH4tApPf6vF7y0Qi7hXzygbg4yvLcawCJspPnR2KjIR9o0D7gD_35xUjHTYKHUeP-hmoa6xIr8warRBGQTGQ_0cBfCNw11fAAkOf_A4Bvl94JuEjb3T3zX4W1TP1ScKClaPWUcYw) link to view our board (an account is required).
+
 ## Node graph
 
-TODO image of node graph
+This node graph was obtained using `rqt_graph` and shows our custom nodes and topics. The predefined turtlebot nodes and topics are also shown.
 
-## Working with ROS
+![Node graph](./data_files/rosgraph.svg)
 
-### build your workspace (execute in root of workspace)
+## Commands for working with ROS
+
+### Build your entire workspace (execute in root of workspace)
 
 `colcon build` 
 
-### build only select packages
+### Build only select packages
 
 `colcon build --packages-select <package_name>`
 
-### using ros commands requires sourcing in any terminal
+### Using ros commands requires sourcing in any terminal
 
 `. install/setup.bash`
 
-### get a graphic representation of nodes and graphs
+### Get a graphic representation of nodes and graphs
 
 `rqt_graph`
 
-### get a terminal print of data cast be a certain topic
+### Get a terminal print of data cast be a certain topic
 
 `ros2 topic echo <TOPIC>`
 
-### create a new package (execute in src folder)
+### Create a new package (execute in src folder)
 
 `ros2 pkg create --build-type ament_python <package_name>`
 
-## Github workflow
+## Run a node
+
+You must first configure the entry point in the package's `setup.py` file.
+
+`ros2 run <package_name> <entry_point>`
+
+## run our launch file
+
+This launch file has been configured to run all required nodes for our program.
+
+`ros2 launch stalkbot_interface stalker.launch.py`
+
+## Our Github workflow
+
+(This is a short tutorial for those who have not used git & github before.)
 
 ### Creating new branches
 
