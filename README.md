@@ -2,11 +2,13 @@
 
 We set out to create a robot that can detect people in its field of vision, and then chase them only when they are not looking. This behaviour was inspired by the Weeping Angels from Doctor Who and the Boos from Mario. Because this makes it look like the robot is stalking people, we dubbed this project "stalk-bot".
 
+Throughout the development it became clear that our method of detecting people was not robust enough to properly implement this behaviour, so instead the functionality shifted towards chasing people regardless of whether they were looking at the robot or not.
+
 TODO explain how we detect people (short paragraph on CameraController, Viola&Jones and HOG)
 
-The 
+TODO explain MainController and decision making
 
-Throughout the development it became clear that our method of detecting people was not robust enough to properly implement this behaviour, so instead the functionality shifted towards chasing people regardless of whether they were looking at the robot or not.
+Finally, the `MovementController` node processes the top-level commands and publishes the corresponding message. For example, if the robot has to move forward then the linear velocity will have a positive x value. If it has to rotate then the angular velocity will have positive or negative z value. These values are combined into a `Twist` message (which is built-in to ROS) and are then published to the built-in `cmd_vel` topic, which will handle driving the motors. The speed of moving and rotating can be set separately in the `MovementController` node through class variables.
 
 
 ## Authors
