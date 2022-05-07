@@ -33,7 +33,7 @@ We used Trello to keep track of weekly tasks. You can use [this](https://l.messe
 
 This node graph was obtained using `rqt_graph` and shows our custom nodes and topics. The predefined turtlebot nodes and topics are also shown.
 
-![Node graph](./data_files/rosgraph.svg)
+![Node graph](./data_files/rosgraph-cropped.svg)
 
 ## Commands for working with ROS
 
