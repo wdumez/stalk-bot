@@ -8,7 +8,7 @@ TODO explain how we detect people (short paragraph on CameraController, Viola&Jo
 
 TODO explain MainController and decision making
 
-Finally, the `MovementController` node processes the top-level commands and publishes the corresponding message. For example, if the robot has to move forward then the linear velocity will have a positive x value. If it has to rotate then the angular velocity will have positive or negative z value. These values are combined into a `Twist` message (which is built-in to ROS) and are then published to the built-in `cmd_vel` topic, which will handle driving the motors. The speed of moving and rotating can be set separately in the `MovementController` node through class variables.
+Finally, the `MovementController` node processes the top-level commands and publishes the corresponding message. For example, if the robot has to move forward then the linear velocity will have a positive x value. If it has to rotate then the angular velocity will have positive or negative z value. These values are combined into a `Twist` message (which is built-in to ROS) and are then published to the built-in `cmd_vel` topic, which will handle driving the motors. The speed of moving and rotating can be set separately in the `MovementController` node through class variables. The velocity values are updated every time a message is sent to the `move_command` topic, but they are only published to `cmd_vel` at a fixed interval which can be adjusted using a class variable.
 
 
 ## Authors
